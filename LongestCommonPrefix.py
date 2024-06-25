@@ -5,23 +5,44 @@ class Solution(object):
         :type strs: List[str]
         :rtype: str
         """
-        common_prefix = {}
-        common_index = 0
-        i = 0
-        j=0
-        length = 0
-        for index in range(len(strs[i])):
-             common_prefix[index] = strs[i][index]
-        while(i < len(strs)):
-          if strs[i] != strs[i+1]:
-            if len(strs[i]) < len(strs[i+1]):
-                length = len(strs[i])
-            else:
-                length = len(strs[i+1])
-            if(strs[i][j] == strs[i+1][j]):
-                if (j+1 < length):
-                  j += 1
-        print(common_prefix)
 
+        # The concept, find min length in the strings, use the length to get substring of two strings and compare them.
+        # if the substrings do not match, lower the min_length by 1, if some substring matches proceed to the string and do the same
+        # else if nothing matches return ""
+
+        i = 0
+        min_length = 12222
+        for s in strs:
+            if len(s) < min_length:
+                min_length = len(s)       
+        
+        if min_length <= 0:
+            return ""
+        
+        while (min_length > 0):
+            frst_str = strs[i]
+            if i+1 < len(strs): 
+                snd_str = strs[i+1]
+                if(frst_str[0:min_length] == snd_str[0:min_length]):
+                    if(i+1 < len(strs)):
+                        i += 1
+                    else:
+                        if(min_length <= 0):
+                            return ""
+                        else:
+                            return frst_str[0:min_length]
+                else:
+                    min_length -= 1
+                    if(min_length <= 0):
+                            return ""
+            else:
+                if(min_length <= 0):
+                    return ""
+                else:
+                    return frst_str[0:min_length]
+                
 solution = Solution()
+print(solution.longestCommonPrefix(["","","flight"]))
 print(solution.longestCommonPrefix(["flower","flow","flight"]))
+print(solution.longestCommonPrefix(["dog","racecar","car"]))
+print(solution.longestCommonPrefix(["flower","flow","flows", "flock"]))
